@@ -16,21 +16,25 @@ input_df = st.text_input("Please provide all the required feature details: ")
 input_df_split = input_df.split(',')
 
 submit = st.button("Submit")
-try{
+
 if submit:
-    model = pickle.load(open('model_rf.pkl', 'rb'))
-    features = np.asarray(input_df_split,dtype = np.float64)
-    prediction = model.predict(features.reshape(1,-1))
+    try:
+        # Load the pre-trained model
+        model = pickle.load(open('model_rf.pkl', 'rb'))
 
-    if prediction[0] == 0:
-        st.write("Legitimate Transaction")
-    else:
-        st.write("Fradulant Transaction")
-        }catch(Exception ex){
-        print('Exception handled');
-        }
+        # Convert the input features to a numpy array
+        features = np.asarray(input_df_split, dtype=np.float64)
 
+        # Predict the class using the model
+        prediction = model.predict(features.reshape(1, -1))
 
+        # Display the result
+        if prediction[0] == 0:
+            st.write("Legitimate Transaction")
+        else:
+            st.write("Fraudulent Transaction")
+    except Exception as ex:
+        st.write(f"An error occurred: {ex}")
 
 
 
