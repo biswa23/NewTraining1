@@ -16,7 +16,7 @@ input_df = st.text_input("Please provide all the required feature details: ")
 input_df_split = input_df.split(',')
 
 submit = st.button("Submit")
-
+try{
 if submit:
     model = pickle.load(open('model_rf.pkl', 'rb'))
     features = np.asarray(input_df_split,dtype = np.float64)
@@ -26,6 +26,9 @@ if submit:
         st.write("Legitimate Transaction")
     else:
         st.write("Fradulant Transaction")
+        }catch(Exception ex){
+        print('Exception handled');
+        }
 
 
 
